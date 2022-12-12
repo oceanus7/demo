@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 // @NoArgsConstructor : 디폴트 생성자 자동 추가
+// Entity 클래스에는 Setter 를 지정하지 않도록 하고, 그 목적과 의도가 명확한 메소드를 통해 값을 변경한다.
 @Getter
 @NoArgsConstructor
 @Entity
@@ -39,6 +40,7 @@ public class Posts extends BaseTimeEntity {
         this.author = author;
     }
 
+    // Entity 클래스에는 Setter 를 만들지 말고, 아래와 같이 그 목적과 의도가 명확한 메소드를 통해 값을 변경한다.
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
