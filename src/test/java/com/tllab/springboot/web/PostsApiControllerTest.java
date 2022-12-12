@@ -1,9 +1,9 @@
-package com.example.springboot.web;
+package com.tllab.springboot.web;
 
-import com.example.springboot.domain.posts.Posts;
-import com.example.springboot.domain.posts.PostsRepository;
-import com.example.springboot.web.dto.PostsSaveRequestDto;
-import com.example.springboot.web.dto.PostsUpdateRequestDto;
+import com.tllab.springboot.domain.posts.Posts;
+import com.tllab.springboot.domain.posts.PostsRepository;
+import com.tllab.springboot.web.dto.PostsSaveRequestDto;
+import com.tllab.springboot.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package com.example.springboot.domain.posts;
+package com.tllab.springboot.domain.posts;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
