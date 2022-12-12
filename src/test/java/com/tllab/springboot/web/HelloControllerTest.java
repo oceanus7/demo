@@ -1,6 +1,5 @@
 package com.tllab.springboot.web;
 
-import com.tllab.springboot.web.HelloController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = HelloController.class)
 public class HelloControllerTest {
+
     @Autowired
     private MockMvc mvc;
 
     @Test
-    public void hello가_리턴된다() throws Exception {
+    public void ReturnHello() throws Exception {
         String hello = "hello";
 
         mvc.perform(get("/hello"))
@@ -28,7 +28,7 @@ public class HelloControllerTest {
     }
 
     @Test
-    public void helloDto가_리턴된다() throws Exception {
+    public void ReturnHelloDto() throws Exception {
         String name = "hello";
         int amount = 1000;
 
@@ -37,4 +37,5 @@ public class HelloControllerTest {
                 .andExpect(jsonPath("$.name", is(name)))
                 .andExpect(jsonPath("$.amount", is(amount)));
     }
+
 }
