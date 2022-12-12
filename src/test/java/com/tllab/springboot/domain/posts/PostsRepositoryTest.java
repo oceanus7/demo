@@ -42,13 +42,13 @@ public class PostsRepositoryTest {
 
         // when
         // 테이블 posts 에 있는 모든 데이터를 조회해온다.
-        List<Posts> postsList = postsRepository.findAll();
+        List<Posts> list = postsRepository.findAll();
 
         // then
-        assertThat(postsList.size()).isGreaterThan(0);
-        Posts posts = postsList.get(0);
-        assertThat(posts.getTitle()).isEqualTo(title);
-        assertThat(posts.getContent()).isEqualTo(content);
+        assertThat(list.size()).isGreaterThan(0);
+        Posts entity = list.get(0);
+        assertThat(entity.getTitle()).isEqualTo(title);
+        assertThat(entity.getContent()).isEqualTo(content);
     }
 
     @Test
