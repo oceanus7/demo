@@ -15,11 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class PostsRepositoryTest {
+
     @Autowired
     PostsRepository postsRepository;
 
     // 매 단위 테스트(현재 클래스의 각 테스트 메소드)가 끝날 때마다 수행되는 메소드를 지정한다.
-    // 현재 클래스의 모든 단위 테스트(모든 테스트 메소드)가 끝날 때 수행되도록 하려면 @AfterAll로 지정한다.
+    // 현재 클래스의 모든 단위 테스트(모든 테스트 메소드)가 끝날 때 수행되도록 하려면 @AfterAll 로 지정한다.
     @AfterEach
     public void cleanup() {
         postsRepository.deleteAll();
@@ -31,7 +32,7 @@ public class PostsRepositoryTest {
         String title = "테스트 게시글";
         String content = "테스트 본문";
 
-        // 테이블 posts에 insert/update 쿼리를 실행한다.
+        // 테이블 posts 에 insert/update 쿼리를 실행한다.
         // id 값이 있으면 update, 없으면 insert 쿼리가 실행된다.
         postsRepository.save(Posts.builder()
                 .title(title)
@@ -40,7 +41,7 @@ public class PostsRepositoryTest {
                 .build());
 
         // when
-        // 테이블 posts에 있는 모든 데이터를 조회해온다.
+        // 테이블 posts 에 있는 모든 데이터를 조회해온다.
         List<Posts> postsList = postsRepository.findAll();
 
         // then
@@ -70,4 +71,5 @@ public class PostsRepositoryTest {
         assertThat(posts.getCreatedDate()).isAfter(now);
         assertThat(posts.getModifiedDate()).isAfter(now);
     }
+
 }
