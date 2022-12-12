@@ -21,6 +21,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// @WebMvcTest 는 JPA 를 지원하지 않는다. (Controller, ControllerAdvice 등 외부연동과 관련된 것만 활성화 됨)
+// SpringBootTest 와 TestRestTemplate 를 사용하여 테스트한다.
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PostsApiControllerTest {
