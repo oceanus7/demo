@@ -2,35 +2,37 @@ package com.tllab.springboot.service.posts;
 
 import com.tllab.springboot.domain.posts.Posts;
 import com.tllab.springboot.domain.posts.PostsRepository;
-import com.tllab.springboot.web.dto.PostsResponseDto;
-import com.tllab.springboot.web.dto.PostsSaveRequestDto;
-import com.tllab.springboot.web.dto.PostsUpdateRequestDto;
+import com.tllab.springboot.web.dto.PostsDto;
+import com.tllab.springboot.web.dto.PostsSaveDto;
+import com.tllab.springboot.web.dto.PostsUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
 public class PostsService {
+
     private final PostsRepository postsRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto) {
-        return postsRepository.save(requestDto.toEntity()).getId();
+    public Long save(PostsSaveDto posts) {
+        return postsRepository.save(posts.toEntity()).getId();
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto) {
-        Posts posts = postsRepository.findById(id)
+    public Long update(Long id, PostsUpdateDto posts) {
+        Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-        posts.update(requestDto.getTitle(), requestDto.getContent());
+        entity.update(posts.getTitle(), posts.getContent());
         return id;
     }
 
-    public PostsResponseDto findById(Long id) {
+    @Transactional(readOnly = true)
+    public PostsDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-        return new PostsResponseDto(entity);
+        return new PostsDto(entity);
     }
+
 }

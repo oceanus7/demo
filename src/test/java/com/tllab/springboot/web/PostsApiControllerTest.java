@@ -2,8 +2,8 @@ package com.tllab.springboot.web;
 
 import com.tllab.springboot.domain.posts.Posts;
 import com.tllab.springboot.domain.posts.PostsRepository;
-import com.tllab.springboot.web.dto.PostsSaveRequestDto;
-import com.tllab.springboot.web.dto.PostsUpdateRequestDto;
+import com.tllab.springboot.web.dto.PostsSaveDto;
+import com.tllab.springboot.web.dto.PostsUpdateDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PostsApiControllerTest {
+
     @LocalServerPort
     private int port;
 
@@ -43,7 +44,7 @@ public class PostsApiControllerTest {
         // given
         String title = "title";
         String content = "content";
-        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
+        PostsSaveDto request = PostsSaveDto.builder()
                 .title(title)
                 .content(content)
                 .author("author")
@@ -52,48 +53,49 @@ public class PostsApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        ResponseEntity<Long> response = restTemplate.postForEntity(url, request, Long.class);
 
         // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isGreaterThan(0L);
 
-        List<Posts> all = postsRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContent()).isEqualTo(content);
+        List<Posts> list = postsRepository.findAll();
+        assertThat(list.get(0).getTitle()).isEqualTo(title);
+        assertThat(list.get(0).getContent()).isEqualTo(content);
     }
 
     @Test
     public void Posts_수정된다() throws Exception {
         // given
-        Posts savedPosts = postsRepository.save(Posts.builder()
+        Posts entity = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
                 .author("author")
                 .build());
 
-        Long updateId = savedPosts.getId();
+        Long updateId = entity.getId();
         String expectedTitle = "title2";
         String expectedContent = "content2";
 
-        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+        PostsUpdateDto posts = PostsUpdateDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
-        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+        HttpEntity<PostsUpdateDto> request = new HttpEntity<>(posts);
 
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        ResponseEntity<Long> response = restTemplate.exchange(url, HttpMethod.PUT, request, Long.class);
 
         // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isGreaterThan(0L);
 
-        List<Posts> all = postsRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
-        assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+        List<Posts> list = postsRepository.findAll();
+        assertThat(list.get(0).getTitle()).isEqualTo(expectedTitle);
+        assertThat(list.get(0).getContent()).isEqualTo(expectedContent);
     }
+
 }
