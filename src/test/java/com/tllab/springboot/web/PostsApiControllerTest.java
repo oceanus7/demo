@@ -43,7 +43,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_등록된다() throws Exception {
+    public void testRegisterPosts() throws Exception {
         // given
         String title = "title";
         String content = "content";
@@ -63,12 +63,15 @@ public class PostsApiControllerTest {
         assertThat(response.getBody()).isGreaterThan(0L);
 
         List<Posts> list = postsRepository.findAll();
-        assertThat(list.get(0).getTitle()).isEqualTo(title);
-        assertThat(list.get(0).getContent()).isEqualTo(content);
+        assertThat(list.size()).isGreaterThan(0);
+        Posts entity = list.get(0);
+
+        assertThat(entity.getTitle()).isEqualTo(title);
+        assertThat(entity.getContent()).isEqualTo(content);
     }
 
     @Test
-    public void Posts_수정된다() throws Exception {
+    public void testUpdatePosts() throws Exception {
         // given
         Posts entity = postsRepository.save(Posts.builder()
                 .title("title")
@@ -97,8 +100,11 @@ public class PostsApiControllerTest {
         assertThat(response.getBody()).isGreaterThan(0L);
 
         List<Posts> list = postsRepository.findAll();
-        assertThat(list.get(0).getTitle()).isEqualTo(expectedTitle);
-        assertThat(list.get(0).getContent()).isEqualTo(expectedContent);
+        assertThat(list.size()).isGreaterThan(0);
+        Posts updatedEntity = list.get(0);
+
+        assertThat(updatedEntity.getTitle()).isEqualTo(expectedTitle);
+        assertThat(updatedEntity.getContent()).isEqualTo(expectedContent);
     }
 
 }

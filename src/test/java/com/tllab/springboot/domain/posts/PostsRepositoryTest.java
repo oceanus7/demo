@@ -27,7 +27,7 @@ public class PostsRepositoryTest {
     }
 
     @Test
-    public void TestSaveAndFindPosts() {
+    public void testSaveAndFindPosts() {
         // given
         String title = "테스트 게시글";
         String content = "테스트 본문";
@@ -47,12 +47,13 @@ public class PostsRepositoryTest {
         // then
         assertThat(list.size()).isGreaterThan(0);
         Posts entity = list.get(0);
+
         assertThat(entity.getTitle()).isEqualTo(title);
         assertThat(entity.getContent()).isEqualTo(content);
     }
 
     @Test
-    public void BaseTimeEntity_등록() {
+    public void testRegisterByBaseTimeEntity() {
         // given
         LocalDateTime now = LocalDateTime.of(2022,11,30,0,0,0);
         postsRepository.save(Posts.builder()
@@ -62,15 +63,16 @@ public class PostsRepositoryTest {
                 .build());
 
         // when
-        List<Posts> postsList = postsRepository.findAll();
+        List<Posts> list = postsRepository.findAll();
 
         // then
-        Posts posts = postsList.get(0);
+        assertThat(list.size()).isGreaterThan(0);
+        Posts entity = list.get(0);
 
-        System.out.println(">>>>>>>>> createdDate=" + posts.getCreatedDate() + ", modifiedDate=" + posts.getModifiedDate());
+        System.out.println(">>>>>>>>>> createdDate=" + entity.getCreatedDate() + ", modifiedDate=" + entity.getModifiedDate());
 
-        assertThat(posts.getCreatedDate()).isAfter(now);
-        assertThat(posts.getModifiedDate()).isAfter(now);
+        assertThat(entity.getCreatedDate()).isAfter(now);
+        assertThat(entity.getModifiedDate()).isAfter(now);
     }
 
 }
