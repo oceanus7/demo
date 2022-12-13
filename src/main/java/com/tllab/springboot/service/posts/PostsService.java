@@ -26,6 +26,7 @@ public class PostsService {
 
     @Transactional
     public Long update(Long id, PostsUpdateDto posts) {
+        // findById 는 결과 값이 null 이 될 수 있으므로, orElseThrow() 를 통해 예외처리를 해주어야 한다.
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
@@ -46,6 +47,11 @@ public class PostsService {
 
     @Transactional(readOnly = true)
     public List<PostsListDto> findAllDesc() {
+        // findAllDesc() 함수는 List<Posts> 타입의 리스트를 반환한다.
+        // 이 리스트를 Stream<Posts> 타입의 스트림으로 변환한 다음,
+        // 람다식(posts -> new PostsListDto(posts))으로 매핑한다.
+        // 매핑 결과는 Stream<PostsListDto> 타입의 스트림이며,
+        // 이를 List<PostsListDto> 타입의 리스트로 변환한다.
         return postsRepository.findAllDesc().stream()
                 .map(PostsListDto::new)
                 .collect(Collectors.toList());
@@ -53,6 +59,7 @@ public class PostsService {
 
     @Transactional
     public void delete(Long id) {
+        // findById 는 결과 값이 null 이 될 수 있으므로, orElseThrow() 를 통해 예외처리를 해주어야 한다.
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         postsRepository.delete(entity);

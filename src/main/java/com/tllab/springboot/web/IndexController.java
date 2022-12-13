@@ -21,6 +21,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model) {
+        // 내림차순으로 정렬된 PostsListDto 객체 리스트를 뷰 템플릿에 posts 라는 이름으로 넘겨준다.
         model.addAttribute("posts", postsService.findAllDesc());
         return "index";
     }
@@ -32,6 +33,7 @@ public class IndexController {
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
+        // id 로 조회한 PostsDto 객체를 post 라는 이름으로 뷰 템플릿에 넘겨준다.
         model.addAttribute("post", postsService.findById(id));
         return "posts-update";
     }
