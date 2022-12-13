@@ -21,7 +21,11 @@ public class PostsService {
 
     @Transactional
     public Long save(PostsSaveDto posts) {
-        return postsRepository.save(posts.toEntity()).getId();
+        // Posts 엔터티 클래스는 자신의 dto 클래스에 의존적이지 않도록 해야 한다.
+        // 반대로 dto 클래스들은 자신들이 참조하는 Entity 클래스에 의존적이다.
+        // Posts entity = Posts.createEntity(PostsSaveDto posts) 와 같은 형태로 작성하지 않도록 주의한다.
+        Posts entity = posts.toEntity();
+        return postsRepository.save(entity).getId();
     }
 
     @Transactional

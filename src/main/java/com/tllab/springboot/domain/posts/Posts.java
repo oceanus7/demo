@@ -16,23 +16,23 @@ public class Posts extends BaseTimeEntity {
 
     // @Id : PK 지정
     // GenerationType.IDENTITY : Auto Increment 지정
-    // Long 으로 선언할 경우 데이터 타입 -> BIGINT
+    // Long 으로 선언할 경우 DB 데이터 타입 -> BIGINT
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 데이터 타입 -> VARCHAR(500)
+    // 데이터 타입 -> VARCHAR(500), NOT NULL
     @Column(length = 500, nullable = false)
     private String title;
 
-    // 데이터 타입 -> TEXT
+    // 데이터 타입 -> TEXT, NOT NULL
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // @Column 이 선언되지 않아도 @Entity 로 선언된 클래스의 모든 인스턴스 변수는 컬럼이 된다.
+    // @Column 어노테이션이 선언되지 않아도 @Entity 로 선언된 클래스의 모든 인스턴스 변수는 컬럼이 된다.
     private String author;
 
-    // @Builder : 빌더 패턴 클래스 생성, 생성자에 포함된 필드만 빌더에 포함
+    // @Builder : 빌더 패턴 클래스 메소드 생성, 생성자 인자 리스트에 포함된 필드들만 빌더에 포함된다.
     @Builder
     public Posts(String title, String content, String author) {
         this.title = title;
