@@ -1,11 +1,14 @@
 package com.tllab.springboot.web;
 
+import com.tllab.springboot.config.auth.dto.SessionUsers;
 import com.tllab.springboot.service.posts.PostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.servlet.http.HttpSession;
 
 // 스프링부트 2.7.x 에서 Mustache 사용 시 한글이 깨지는 문제가 있다.
 // application.properties 에 다음을 추가한다. (HTTP request/response 를 UTF-8 로 강제 인코딩하도록 함)
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -29,6 +33,11 @@ public class IndexController {
         // 서버 사이드에서 Model 객체의 속성을 통해 뷰 템플릿에 값을 넘겨 줄 수 있다.
         // 내림차순으로 정렬된 PostsListDto 객체 리스트를 뷰 템플릿에 posts 라는 이름으로 넘겨준다.
         model.addAttribute("posts", postsService.findAllDesc());
+
+        // CustomOAuth2UserService 에서 로그인 성공 시 세션에 저장한 SessionUser 객체 정보를 가져와서 뷰 템플릿에 넘겨준다.
+        SessionUsers users = (SessionUsers) httpSession.getAttribute("users");
+        if (users != null)
+            model.addAttribute("name", users.getName());
 
         // index.mustache 뷰 템플릿 로딩
         return "index";

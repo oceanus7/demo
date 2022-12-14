@@ -1,6 +1,6 @@
 package com.tllab.springboot.config.auth.dto;
 
-import com.tllab.springboot.domain.user.User;
+import com.tllab.springboot.domain.user.Users;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -12,18 +12,18 @@ import java.io.Serializable;
 // 성능 저하 이슈, 부스 효과 등이 발생할 가능성이 있다. 따라서 작렬화가 구현된 세션용 Dto 를 추가로 만들어 사용하는 것이
 // 운영 및 유지보수에 유리하다.
 
-// 세션 저장용 User 객체(직렬화 구현)
+// 세션 저장용 사용자 객체(직렬화 구현)
 @Getter
-public class SessionUser implements Serializable {
+public class SessionUsers implements Serializable {
 
     private String name;
     private String email;
     private String picture;
 
-    public SessionUser(User user) {
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.picture = user.getPicture();
+    public SessionUsers(Users users) {
+        this.name = users.getName();
+        this.email = users.getEmail();
+        this.picture = users.getPicture();
     }
 
 }
