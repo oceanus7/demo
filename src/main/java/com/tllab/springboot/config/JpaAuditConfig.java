@@ -1,13 +1,7 @@
 package com.tllab.springboot.config;
 
-import com.tllab.springboot.config.auth.LoginUserArgumentResolver;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 // @EnableJpaAuditing 을 @SpringBootApplication 이 선언된 Application(메인 클래스) 클래스에 선언할 경우,
 // @WebMvcTest 테스트 실행 시 @SpringBootApplication 을 스캔하면서 @EnableJpaAuditing 도 스캔하게 되는데, 이 때 오류가 발생한다.
@@ -18,16 +12,7 @@ import java.util.List;
 
 // @EnableJpaAuditing : JPA Auditing(데이터의 생성/변경 시간을 자동으로 체크하여 해당 컬럼에 저장) 어노테이션 활성화
 
-@RequiredArgsConstructor
 @EnableJpaAuditing
 @Configuration
-public class SpringConfig implements WebMvcConfigurer {
-
-    private final LoginUserArgumentResolver loginUserArgumentResolver;
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(loginUserArgumentResolver);
-    }
-
+public class JpaAuditConfig {
 }
