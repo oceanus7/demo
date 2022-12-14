@@ -27,7 +27,7 @@ public class OAuthAttributes {
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         if ("naver".equals(registrationId)) {
-            return ofNaver("id", attributes);
+            return ofNaver(userNameAttributeName, attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
@@ -43,13 +43,17 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
-        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        // Naver 로그인의 경우, attributes 가 "resultCode", "message", "response" 세 개의 항목으로 구성되고,
+        // 다른 소셜 로그인의 로그인 결과가 그 중 userNameAttributeName 값인 "response" 하위에 담겨있다.
+        // 따라서 attributes 에서 "response" 항목을 추출하여 처리한다.
+        // 이 때, nameAttributeKey 는 response 하위 항목 중 "id" 를 사용한다.
+        Map<String, Object> response = (Map<String, Object>) attributes.get(userNameAttributeName);
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
                 .attributes(response)
-                .nameAttributeKey(userNameAttributeName)
+                .nameAttributeKey("id")
                 .build();
     }
 
