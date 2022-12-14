@@ -30,6 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // @WebMvcTest 는 JPA 를 지원하지 않는다. (Controller, ControllerAdvice 등 외부연동과 관련된 것만 활성화 됨)
 // SpringBootTest 와 TestRestTemplate 를 사용하여 테스트한다.
+// @WebMvcTest 는 일반적은 @Configuration 은 스캔하지 않는다.
+
+// 스프링 시큐리티 적용시에는 TestRestTemplate 을 사용할 때 사용자 권한 때문에 테스트에 실패한다.
+// @WithMockUser 를 사용해야 하며, @WithMockUser 는 MockMvc 에서만 사용 가능하다.
+// 따라서, TestRestTemplate 이 아닌 MockMvc 를 생성하여 테스트를 수행해야 한다.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -49,6 +54,7 @@ public class PostsApiControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
+    // Spring Security 사용시
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders
@@ -78,10 +84,12 @@ public class PostsApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         // when
+//        // Spring Security 사용하지 않을 경우
 //        ResponseEntity<Long> response = restTemplate.postForEntity(url, posts, Long.class);
 //        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(response.getBody()).isGreaterThan(0L);
 
+        // Spring Security 사용시
         mvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(new ObjectMapper().writeValueAsString(posts)))
@@ -117,13 +125,14 @@ public class PostsApiControllerTest {
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
-        HttpEntity<PostsUpdateDto> request = new HttpEntity<>(posts);
-
         // when
+//        // Spring Security 사용하지 않을 경우
+//        HttpEntity<PostsUpdateDto> request = new HttpEntity<>(posts);
 //        ResponseEntity<Long> response = restTemplate.exchange(url, HttpMethod.PUT, request, Long.class);
 //        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(response.getBody()).isGreaterThan(0L);
 
+        // Spring Security 사용시
         mvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(new ObjectMapper().writeValueAsString(posts)))
