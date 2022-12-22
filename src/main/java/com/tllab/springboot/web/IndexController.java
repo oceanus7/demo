@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpSession;
 
 // 스프링부트 2.7.x 에서 Mustache 사용 시 한글이 깨지는 문제가 있다.
-// application.properties 에 다음을 추가한다. (HTTP request/response 를 UTF-8 로 강제 인코딩하도록 함)
+// application-dev.properties 에 다음을 추가한다. (HTTP request/response 를 UTF-8 로 강제 인코딩하도록 함)
 // server.servlet.encoding.force=true
 
 // Mustache 사용시 @RestController 이 아니라 @Controller 을 사용해야 한다.
