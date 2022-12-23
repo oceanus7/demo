@@ -10,6 +10,7 @@ cache:
     - '$HOME/.gradle'
 script: "./gradlew clean build"
 before_deploy:
+  - rm -rf before-deploy
   - mkdir -p before-deploy
   - cp scripts/*.sh before-deploy/
   - cp scripts/appspec.yml before-deploy/
