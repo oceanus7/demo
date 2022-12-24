@@ -7,13 +7,13 @@ source ${ABSDIR}/profile.sh
 function switch_proxy() {
   IDLE_PORT=$(find_idle_port)
 
-  echo "> 전환할 Port: $IDLE_PORT"
+  echo "> 전환할 포트: $IDLE_PORT"
 
-  echo "> Port 전환"
+  echo "> 리버스 프록시 연결 포트 전환"
 
   echo "set \$service_url http://127.0.0.1:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 
-  echo "> 엔진엑스 Reload"
+  echo "> 리버스 프록시 Reload"
 
   sudo systemctl reload nginx
 }

@@ -7,7 +7,7 @@ source ${ABSDIR}/switch.sh
 
 IDLE_PORT=$(find_idle_port)
 
-echo "> Health Check Start!"
+echo "> Health Check 시작!"
 echo "> IDLE_PORT: $IDLE_PORT"
 echo "> curl -s http://localhost:$IDLE_PORT/profile"
 sleep 15
@@ -23,14 +23,14 @@ do
     switch_proxy
     break
   else
-    echo "> Health Check 의 응담을 알 수 없거나 실행 상태가 아닙니다."
+    echo "> $IDLE_PORT 포트의 애플리케이션이 응답이 없거나 실행 상태가 아닙니다."
     echo "> Health Check: ${RESPONSE}"
   fi
 
   if [ ${RETRY_COUNT} -eq 10 ]
   then
     echo "> Health Check 실패"
-    echo "> 엔진엑스에 연결하지 않고 배포를 종료합니다."
+    echo "> 리버스 프록시의 연결 포트를 전환하지 않고 배포를 종료합니다."
     exit 1
   fi
 
