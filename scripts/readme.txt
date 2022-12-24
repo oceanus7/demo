@@ -33,6 +33,8 @@ service-url.inc 파일에 새로운 값을 써 넣고, nginx 를 reload 하면 p
 
 * 빌드 시스템으로 travis ci 가 간편한 설정에 안정적인 운영이 가능한 장점이 있으나 유료 서비스인데다가 그 가격도 꽤 비싸다. 그냥 jenkins 를 구축하여 쓰자.
 
+* jenkins 빌드 시 메모리를 생각보다 많이 사용한다. 반드시 swap 을 4G 이상 설정한다. (AWS EC2 에 스왑 설정하는 방법 : https://aws.amazon.com/ko/premiumsupport/knowledge-center/ec2-memory-swap-file/)
+
 * github + jenkins 또는 github + jenkins + AWS code deploy 로 배포 시스템을 구성한다. jenkins 는 빌드와 배포를 겸할 수 있다.
 단, 배포 파일 저장을 별도로 해야 하는데, S3 를 사용하여 배포 파일 백업을 할 거라면 code deploy 를 같이 사용하는 것이 낫다.
 
