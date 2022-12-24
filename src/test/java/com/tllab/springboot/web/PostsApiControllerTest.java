@@ -91,7 +91,7 @@ public class PostsApiControllerTest {
 
         // Spring Security 사용시
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(posts)))
                 .andExpect(status().isOk());
 
@@ -134,7 +134,7 @@ public class PostsApiControllerTest {
 
         // Spring Security 사용시
         mvc.perform(put(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(posts)))
                 .andExpect(status().isOk());
 
