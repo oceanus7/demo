@@ -37,7 +37,7 @@ public class SecurityConfig {
 //    }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .csrf().disable()   // h2-console 화면을 사용하기 위한 설정
             .headers().frameOptions().disable() // h2-console 화면을 사용하기 위한 설정
