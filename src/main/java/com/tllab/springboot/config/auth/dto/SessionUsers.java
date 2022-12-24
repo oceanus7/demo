@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Getter
 public class SessionUsers implements Serializable {
 
+    // 객체의 필드 구성이 바뀌 때, 아래 값도 변경한다.
     private static final long serialVersionUID = 1L;
 
     private final String name;
