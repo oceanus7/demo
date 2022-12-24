@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Getter
 public class SessionUsers implements Serializable {
 
-    //private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private final String name;
     private final String email;
