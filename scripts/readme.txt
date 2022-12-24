@@ -30,3 +30,17 @@ service-url.inc 파일에 새로운 값을 써 넣고, nginx 를 reload 하면 p
 
 * 리버스 프록시를 활용한 무중단 배포
 서버 인스턴스를 항상 2개 띄워 놓아야 한다는 단점이 있으나 운영 서버 다운으로 인한 서비스 중단을 대비하기 위해서도 이중화는 필요한 만큼 큰 단점은 아니다.
+
+* 빌드 시스템으로 travis ci 가 간편한 설정에 안정적인 운영이 가능한 장점이 있으나 유료 서비스인데다가 그 가격도 꽤 비싸다. 그냥 jenkins 를 구축하여 쓰자.
+
+* github + jenkins 또는 github + jenkins + AWS code deploy 로 배포 시스템을 구성한다. jenkins 는 빌드와 배포를 겸할 수 있다.
+단, 배포 파일 저장을 별도로 해야 하는데, S3 를 사용하여 배포 파일 백업을 할 거라면 code deploy 를 같이 사용하는 것이 낫다.
+
+* DevOps 실현을 위한 전체 빌드/배포 시스템 구성은 다음과 같다.
+
+단일 코드 접점(Code Repository) : github
+자동 빌드 또는 원 클릭 빌드(CI) : jenkins + gradle
+테스트 자동 실행(Test Automation): gradle + JUnit
+배포 파일 백업 저장(Backup) : AWS S3
+배포(CD) : AWS Code Deploy
+무중단 배포(Zero-downtime Deployment) : nginx(리버스 프록시)
