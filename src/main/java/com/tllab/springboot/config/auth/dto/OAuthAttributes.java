@@ -47,7 +47,7 @@ public class OAuthAttributes {
         // 다른 소셜 로그인의 로그인 결과가 그 중 userNameAttributeName 값인 "response" 하위에 담겨있다.
         // 따라서 attributes 에서 "response" 항목을 추출하여 처리한다.
         // 이 때, nameAttributeKey 는 response 하위 항목 중 "id" 를 사용한다.
-        Map<String, Object> response = (Map<String, Object>) attributes.get(userNameAttributeName);
+        @SuppressWarnings("unchecked") Map<String, Object> response = (Map<String, Object>) attributes.get(userNameAttributeName);
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
