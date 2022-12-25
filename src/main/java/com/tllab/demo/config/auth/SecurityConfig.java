@@ -38,7 +38,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+        http
             .csrf().disable()   // h2-console 화면을 사용하기 위한 설정
             .headers().frameOptions().disable() // h2-console 화면을 사용하기 위한 설정
         .and()
@@ -52,10 +52,9 @@ public class SecurityConfig {
         .and()
             .oauth2Login()  // OAuth2 로그인 설정 시작
                 .userInfoEndpoint() // 로그인 성공 이후 사용자 정보를 가져오며, 가져온 사용자 정보에 대한 설정 시작
-                .userService(oauth2UserService) // 가져온 사용자 정보로 추가로 진행하고자 하는 기능을 명시한 UserService 인터페이스 구현체 등록
-            .and()
-        .and()
-        .build();
+                .userService(oauth2UserService); // 가져온 사용자 정보로 추가로 진행하고자 하는 기능을 명시한 UserService 인터페이스 구현체 등록
+
+        return http.build();
     }
 
 }
