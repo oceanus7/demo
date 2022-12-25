@@ -64,10 +64,11 @@ public class SecurityConfig {
         List<String> profiles = Arrays.asList(env.getActiveProfiles());
         if (profiles.isEmpty() || profiles.get(0).equals("default")) {
             urlList.add("/h2-console/**");
-            http.csrf().disable().headers().frameOptions().disable();       // h2-console 화면을 위한 설정
+            http.headers().frameOptions().disable();
         }
 
         http
+            .csrf().disable()       // rest api 호출을 위해서 설정. 설정하지 않으면 403 에러가 난다.
             .authorizeRequests()    // URL 별 권한 관리 시작
                 .antMatchers(urlList.toArray(new String[0])).permitAll()    // 전체 열람 권한 부여
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())        // API 들은 USER 권한을 가진 경우에만 접근 가능
