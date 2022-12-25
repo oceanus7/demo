@@ -4,8 +4,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-group 'com.tllab'
-version '1.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
+group = 'com.tllab'
+version = '1.0.1-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
 sourceCompatibility = '1.8'
 
 repositories {
