@@ -1,13 +1,16 @@
 # Project exclude paths
-.gradle/
-.idea/
+.gradle
+
+# IntelliJ
+.idea
 build/
 
 # Eclipse
-.settings/
+.settings
 .classpath
 .project
 bin/
 
+# Private informations
 #application-oauth.properties
 #application-real-db.properties
