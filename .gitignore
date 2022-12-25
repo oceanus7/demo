@@ -3,4 +3,10 @@
 .idea
 build/
 
+# Eclipse
+.settings
+.classpath
+.project
+
 #application-oauth.properties
+#application-real-db.properties
