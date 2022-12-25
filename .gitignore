@@ -1,10 +1,10 @@
 # Project exclude paths
-.gradle
-.idea
+.gradle/
+.idea/
 build/
 
 # Eclipse
-.settings
+.settings/
 .classpath
 .project
 bin/
