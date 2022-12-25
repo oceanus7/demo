@@ -64,7 +64,7 @@ public class SecurityConfig {
         List<String> profiles = Arrays.asList(env.getActiveProfiles());
         if (profiles.isEmpty() || profiles.get(0).equals("default")) {
             urlList.add("/h2-console/**");
-            http.headers().frameOptions().disable();
+            http.headers().frameOptions().disable();    // h2-console 화면을 사용하기 위한 설정
         }
 
         http
